@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tombola</title>
+	<style>
+		body {
+			font-family: sans-serif;
+		}
+		.numero {
+			margin: 2px;
+			padding: 10px;
+			background-color: lightblue;
+			border-radius: 50%;
+			float: left;
+			cursor: pointer;
+		}
+		.estratto {
+			background-color: #ffd31d;
+		}
+	</style>
+</head>
+<body>
+	<h1>Tombola</h1>
+	<div id="tabellone">
+		<!-- qui verranno inseriti i numeri generati dal JavaScript -->
+	</div>
+	<button id="estrai">Estrai un numero</button>
+	<script>
+		// generiamo i numeri da 1 a 90
+		var numeri = [];
+		for (var i = 1; i <= 90; i++) {
+			numeri.push(i);
+		}
+
+		// generiamo il tabellone con tutti i numeri
+		var tabellone = document.getElementById('tabellone');
+		for (var i = 0; i < numeri.length; i++) {
+			// creiamo i div con i numeri
+			var numDiv = document.createElement('div');
+			numDiv.className = 'numero';
+			numDiv.innerHTML = numeri[i];
+			numDiv.value = numeri[i];
+			tabellone.appendChild(numDiv);
+		}
+
+		// estraiamo un numero casuale
+		var estrai = document.getElementById('estrai');
+		estrai.addEventListener('click', function () {
+			// selezioniamo un numero casuale dall'array
+			var indiceCasuale = Math.floor(Math.random() * numeri.length);
+			var numeroEstratto = numeri[indiceCasuale];
+
+			// cerchiamo il div corrispondente al numero estratto
+			var divNumeri = document.getElementsByClassName('numero');
+			for (var i = 0; i < divNumeri.length; i++) {
+				if (divNumeri[i].value == numeroEstratto) {
+					// aggiorniamo la grafica del div per far capire che è stato estratto
+					divNumeri[i].className += ' estratto';
+					break;
+				}
+			}
+
+			// togliamo il numero estratto dall'array
+			numeri.splice(indiceCasuale, 1);
+		});
+	</script>
+</body>
+</html>
